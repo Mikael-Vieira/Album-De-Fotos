@@ -10,12 +10,11 @@
 
         <h1>Criar Álbum</h1>
 
-        <form action="/albums" method="POST">
+        <form action="/albums" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="form-group">
                 <label for="name">Nome do Álbum</label>
-
                 <input
                     type="text"
                     id="name"
@@ -27,13 +26,22 @@
 
             <div class="form-group">
                 <label for="description">Descrição</label>
-
                 <textarea
                     id="description"
                     name="description"
                     rows="4"
                     placeholder="Descreva o álbum..."
                 ></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="cover_photo">Foto de Capa (Opcional)</label>
+                <input
+                    type="file"
+                    id="cover_photo"
+                    name="cover_photo"
+                    accept="image/*"
+                >
             </div>
 
             <button type="submit" class="btn-save">

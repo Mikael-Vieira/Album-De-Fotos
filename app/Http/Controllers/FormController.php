@@ -14,12 +14,14 @@ class FormController extends Controller
     {
         $request->validate([
             'name' => 'required|max:255',
-            'description' => 'required',
+            'description' => 'nullable',
+            'cover_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         Album::create([
             'name' => $request->name,
             'description' => $request->description,
+            'cover_photo' => $request->file('cover_photo') ? $request->file('cover_photo')->store('albums', 'public') : null,
         ]);
 
         return redirect('/')->with('sucesso', 'Álbum cadastrado com sucesso!');
