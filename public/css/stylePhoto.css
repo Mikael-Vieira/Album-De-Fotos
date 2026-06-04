@@ -1,0 +1,76 @@
+.photos-container {
+    width: 100%;
+}
+
+.photos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.photos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.photo-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+}
+
+.photo-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.upload-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.file-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid #d0d5dd;
+    background: #fff;
+    color: #555;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.file-label:hover { background: #f5f5f5; }
+
+.file-name {
+    font-size: 13px;
+    color: #aaa;
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.btn-upload {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    background: #0d6efd;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+.btn-upload:hover { opacity: 0.88; }
