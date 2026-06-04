@@ -16,6 +16,7 @@
 
         <a href="{{ route('card.index') }}">🏠 Início</a>
         <a href="{{ route('formulario') }}">📚 Criar Álbum</a>
+        <a href="/catalogar">🖼️ Catalogar Foto</a>
         <a href="/photos">🖼️ Minhas Fotos</a>
     </aside>
 

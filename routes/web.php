@@ -3,18 +3,18 @@
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\CardsController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\PhotoController; // Adicionamos a importação do novo controller aqui
 use Illuminate\Support\Facades\Route;
 
-//quando acessar a rota /... retorna a funcao do controller que retorna a view
+// Rotas dos Álbuns
 Route::get('/form', [FormController::class, 'index'])->name('formulario');
-
-Route::get('/photos', function () {
-    return view('photos');
-});
-
-//acessa a view index com os dados atualizados de acordo com o banco
 Route::get('/', [CardsController::class, 'select'])->name('card.index');
-
-//chama as funcoes do controller
 Route::post('/albums', [FormController::class, 'store']);
 Route::get('/albums', [CardsController::class, 'select']);
+Route::get('/albums/{id}', [AlbumController::class, 'show'])->name('albums.show');
+
+// Rotas das Fotos
+Route::get('/photos', [PhotoController::class, 'index'])->name('photos.index');
+Route::get('/catalogar', [PhotoController::class, 'uploadPage'])->name('photos.catalogar');
+Route::post('/catalogar/salvar', [PhotoController::class, 'storePhoto'])->name('photos.store');
+Route::post('/fotos/vincular', [PhotoController::class, 'linkAlbum'])->name('photos.link-album');

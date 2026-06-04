@@ -15,6 +15,7 @@ body {
     background-color: #212529;
     color: white;
     padding: 20px;
+    flex-shrink: 0;
 }
 
 .sidebar h3 {
@@ -85,4 +86,10 @@ body {
     cursor: pointer;
     background-color: #0d6efd;
     color: white;
+}
+
+.album-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }

@@ -9,33 +9,39 @@
     <div class="photos-header">
         <h1>Minhas fotos</h1>
 
-        <form enctype="multipart/form-data" class="upload-area">
-            <label class="file-label" for="photos">
-                📁 Escolher arquivos
-            </label>
-            <input id="photos" type="file" name="photos[]" multiple accept="image/*" style="display:none">
-            <span class="file-name" id="file-name-display">Nenhum arquivo</span>
-            <button type="submit" class="btn-upload">⬆ Fazer upload</button>
-        </form>
+        @if(session('sucesso'))
+            <div style="background: #d4edda; color: #155724; padding: 10px; border-radius: 4px; margin-bottom: 15px; width: 100%;">
+                {{ session('sucesso') }}
+            </div>
+        @endif
     </div>
 
     <div class="photos-grid">
 
-        <div class="photo-card">
-            <img src="https://placehold.co/300x250" alt="Foto">
-        </div>
+        @forelse($photos as $photo)
+            <div class="photo-card" style="border: 1px solid #ddd; padding: 10px; border-radius: 8px; background: #fff; display: flex; flex-direction: column; gap: 10px;">
+                <img src="{{ asset('storage/' . $photo->image_path) }}" alt="Foto" style="width: 100%; height: 200px; object-fit: cover; border-radius: 4px;">
+                <form action="{{ route('photos.link-album') }}" method="POST" style="margin-top: auto;">
+                    @csrf
+                    <input type="hidden" name="photo_id" value="{{ $photo->id }}">
 
-        <div class="photo-card">
-            <img src="https://placehold.co/300x250" alt="Foto">
-        </div>
+                    <div style="display: flex; gap: 5px;">
+                        <select name="album_id" required style="flex-grow: 1; padding: 5px; font-size: 12px; border-radius: 4px;">
+                            <option value="">Catalogar em...</option>
+                            @foreach($albums as $album)
+                                <option value="{{ $album->id }}">{{ $album->name }}</option>
+                            @endforeach
+                        </select>
+                        <button type="submit" style="background: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                            OK
+                        </button>
+                    </div>
+                </form>
 
-        <div class="photo-card">
-            <img src="https://placehold.co/300x250" alt="Foto">
-        </div>
-
-        <div class="photo-card">
-            <img src="https://placehold.co/300x250" alt="Foto">
-        </div>
+            </div>
+        @empty
+            <p style="grid-column: 1 / -1; text-align: center; color: #777;">Nenhuma foto cadastrada ainda.</p>
+        @endforelse
 
     </div>
 
