@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Album;
 use App\Models\Photo;
@@ -58,5 +58,18 @@ class PhotoController extends Controller
         $album->photos()->syncWithoutDetaching([$request->photo_id]);
 
         return redirect()->back()->with('sucesso', 'Foto catalogada com sucesso!');
+    }
+
+    public function destroy(Photo $photo)
+    {
+        if ($photo->image_path && Storage::disk('public')->exists($photo->image_path)) {
+            Storage::disk('public')->delete($photo->image_path);
+        }
+
+        $photo->albums()->detach();
+
+        Photo::destroy($photo->id);
+
+        return redirect()->back()->with('sucesso', 'Foto excluída permanentemente do sistema!');
     }
 }

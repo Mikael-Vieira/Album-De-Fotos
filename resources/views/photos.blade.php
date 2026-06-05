@@ -19,8 +19,18 @@
     <div class="photos-grid">
 
         @forelse($photos as $photo)
-            <div class="photo-card" style="border: 1px solid #ddd; padding: 10px; border-radius: 8px; background: #fff; display: flex; flex-direction: column; gap: 10px;">
+            <div class="photo-card" style="border: 1px solid #ddd; padding: 10px; border-radius: 8px; background: #fff; display: flex; flex-direction: column; gap: 10px; position: relative;">
+
+                <form action="{{ route('photos.destroy', $photo->id) }}" method="POST" class="delete-photo-form">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="delete-photo-btn" onclick="return confirm('ATENÇÃO: Isso apagará a foto permanentemente de todos os álbuns e do sistema. Deseja continuar?')">
+                        ✕
+                    </button>
+                </form>
+
                 <img src="{{ asset('storage/' . $photo->image_path) }}" alt="Foto" style="width: 100%; height: 200px; object-fit: cover; border-radius: 4px;">
+
                 <form action="{{ route('photos.link-album') }}" method="POST" style="margin-top: auto;">
                     @csrf
                     <input type="hidden" name="photo_id" value="{{ $photo->id }}">

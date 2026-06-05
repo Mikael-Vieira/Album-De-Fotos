@@ -7,14 +7,14 @@
 
         <div class="album-form-card">
 
-            <h1>Catalogar Nova Foto</h1>
+            <h1>Adicionar Nova Foto</h1>
 
             @if (session('sucesso'))
                 <div style="background: #d4edda; color: #155724; padding: 10px; border-radius: 4px; margin-bottom: 20px;">
                     {{ session('sucesso') }}
                 </div>
             @endif
-            
+
             <form action="{{ route('photos.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
@@ -35,7 +35,7 @@
 
                 <button type="submit" class="btn-save"
                     style="width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                    Catalogar Foto
+                    Adicionar Foto
                 </button>
 
             </form>

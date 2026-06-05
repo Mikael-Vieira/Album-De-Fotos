@@ -18,3 +18,8 @@ Route::get('/photos', [PhotoController::class, 'index'])->name('photos.index');
 Route::get('/catalogar', [PhotoController::class, 'uploadPage'])->name('photos.catalogar');
 Route::post('/catalogar/salvar', [PhotoController::class, 'storePhoto'])->name('photos.store');
 Route::post('/fotos/vincular', [PhotoController::class, 'linkAlbum'])->name('photos.link-album');
+//deletar foto do álbum
+Route::delete('/albums/{album}/photos/{photo}', [AlbumController::class, 'detachPhoto'])->name('albums.photos.detach');
+
+//deletar foto do sistema
+Route::delete('/photos/{photo}', [PhotoController::class, 'destroy'])->name('photos.destroy');

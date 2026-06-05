@@ -43,4 +43,11 @@ class AlbumController extends Controller
 
         return view('albums.show', compact('album'));
     }
+
+    public function detachPhoto(Album $album, Photo $photo)
+    {
+        $album->photos()->detach($photo->id);
+
+        return redirect()->back()->with('sucesso', 'Foto removida do álbum com sucesso!');
+    }
 }
