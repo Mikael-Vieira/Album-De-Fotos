@@ -28,8 +28,10 @@
                         ✕
                     </button>
                 </form>
+                <a href="{{ asset('storage/' . $photo->image_path) }}" target="_blank" title="Clique para ver a foto">
+                    <img src="{{ asset('storage/' . $photo->image_path) }}" alt="Foto" style="width: 100%; height: 200px; object-fit: cover; border-radius: 4px;">
+                </a>
 
-                <img src="{{ asset('storage/' . $photo->image_path) }}" alt="Foto" style="width: 100%; height: 200px; object-fit: cover; border-radius: 4px;">
 
                 <form action="{{ route('photos.link-album') }}" method="POST" style="margin-top: auto;">
                     @csrf

@@ -23,3 +23,6 @@ Route::delete('/albums/{album}/photos/{photo}', [AlbumController::class, 'detach
 
 //deletar foto do sistema
 Route::delete('/photos/{photo}', [PhotoController::class, 'destroy'])->name('photos.destroy');
+
+//mostrar foto em tamanho real
+Route::get('/photos/{photo}', [PhotoController::class, 'show'])->name('photos.show');

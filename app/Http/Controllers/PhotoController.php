@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Album;
@@ -71,5 +72,20 @@ class PhotoController extends Controller
         Photo::destroy($photo->id);
 
         return redirect()->back()->with('sucesso', 'Foto excluída permanentemente do sistema!');
+    }
+
+    public function show(Photo $photo)
+    {
+        // 1. Pega o caminho real do arquivo dentro do seu HD
+        $caminhoAbsoluto = storage_path('app/public/' . $photo->image_path);
+
+        // 2. Verifica se o arquivo realmente existe no HD
+        if (file_exists($caminhoAbsoluto)) {
+            // Retorna o arquivo cru para o navegador, sem nenhuma casca de HTML
+            return response()->file($caminhoAbsoluto);
+        }
+
+        // Se não achar, dá erro 404
+        abort(404);
     }
 }
