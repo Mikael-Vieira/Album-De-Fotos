@@ -24,37 +24,30 @@ class PhotoController extends Controller
         return view('photos', compact('photos', 'albums'));
     }
 
-    // 3. Processa o upload de múltiplas fotos de uma só vez (Tornando o álbum opcional)
+    // 3. Processa o formulário de upload da página de Catalogar
     public function storePhoto(Request $request)
     {
-        // 1. Valida se o campo 'photos' veio como um array e checa os requisitos de cada imagem
         $request->validate([
             'photos'   => 'required|array',
-            'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Valida cada foto individual do lote
+            'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'album_id' => 'nullable|exists:albums,id'
         ]);
 
-        // 2. Se o usuário selecionou um álbum, buscamos ele uma única vez fora do loop para poupar o banco
         $album = $request->filled('album_id') ? Album::findOrFail($request->album_id) : null;
 
-        // 3. Percorre a lista de imagens enviadas
         foreach ($request->file('photos') as $file) {
 
-            // Salva o arquivo físico na pasta local (storage/app/public/galeria_fotos)
             $path = $file->store('galeria_fotos', 'public');
 
-            // Cria uma nova linha na tabela 'photos' do seu banco de dados
             $photo = Photo::create([
                 'image_path' => $path
             ]);
 
-            // Se o álbum foi informado, faz o vínculo na tabela pivô
             if ($album) {
                 $album->photos()->attach($photo->id);
             }
         }
 
-        // 4. Retorna para a página com a mensagem de sucesso correspondente
         if ($album) {
             return redirect()->back()->with('sucesso', 'Todas as fotos foram adicionadas e catalogadas no álbum com sucesso!');
         }
@@ -91,16 +84,12 @@ class PhotoController extends Controller
 
     public function show(Photo $photo)
     {
-        // 1. Pega o caminho real do arquivo dentro do seu HD
         $caminhoAbsoluto = storage_path('app/public/' . $photo->image_path);
 
-        // 2. Verifica se o arquivo realmente existe no HD
         if (file_exists($caminhoAbsoluto)) {
-            // Retorna o arquivo cru para o navegador, sem nenhuma casca de HTML
             return response()->file($caminhoAbsoluto);
         }
 
-        // Se não achar, dá erro 404
         abort(404);
     }
 }
