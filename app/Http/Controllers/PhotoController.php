@@ -24,27 +24,42 @@ class PhotoController extends Controller
         return view('photos', compact('photos', 'albums'));
     }
 
-    // 3. Processa o upload da foto (Tornando o álbum opcional)
+    // 3. Processa o upload de múltiplas fotos de uma só vez (Tornando o álbum opcional)
     public function storePhoto(Request $request)
     {
+        // 1. Valida se o campo 'photos' veio como um array e checa os requisitos de cada imagem
         $request->validate([
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photos'   => 'required|array',
+            'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Valida cada foto individual do lote
             'album_id' => 'nullable|exists:albums,id'
         ]);
 
-        $path = $request->file('photo')->store('galeria_fotos', 'public');
+        // 2. Se o usuário selecionou um álbum, buscamos ele uma única vez fora do loop para poupar o banco
+        $album = $request->filled('album_id') ? Album::findOrFail($request->album_id) : null;
 
-        $photo = Photo::create([
-            'image_path' => $path
-        ]);
+        // 3. Percorre a lista de imagens enviadas
+        foreach ($request->file('photos') as $file) {
 
-        if ($request->filled('album_id')) {
-            $album = Album::findOrFail($request->album_id);
-            $album->photos()->attach($photo->id);
-            return redirect()->back()->with('sucesso', 'Foto adicionada e catalogada com sucesso!');
+            // Salva o arquivo físico na pasta local (storage/app/public/galeria_fotos)
+            $path = $file->store('galeria_fotos', 'public');
+
+            // Cria uma nova linha na tabela 'photos' do seu banco de dados
+            $photo = Photo::create([
+                'image_path' => $path
+            ]);
+
+            // Se o álbum foi informado, faz o vínculo na tabela pivô
+            if ($album) {
+                $album->photos()->attach($photo->id);
+            }
         }
 
-        return redirect()->back()->with('sucesso', 'Foto adicionada à galeria geral!');
+        // 4. Retorna para a página com a mensagem de sucesso correspondente
+        if ($album) {
+            return redirect()->back()->with('sucesso', 'Todas as fotos foram adicionadas e catalogadas no álbum com sucesso!');
+        }
+
+        return redirect()->back()->with('sucesso', 'Todas as fotos foram adicionadas à galeria geral!');
     }
 
     // 4. Processa o botão "OK" de catalogar direto no card da foto

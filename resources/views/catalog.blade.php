@@ -20,7 +20,7 @@
 
                 <div class="form-group" style="margin-bottom: 20px;">
                     <label for="photo">Selecione a Imagem</label>
-                    <input type="file" id="photo" name="photo" accept="image/*" required>
+                    <input type="file" id="photo" name="photos[]" accept="image/*" multiple required>
                 </div>
 
                 <div class="form-group" style="margin-bottom: 20px;">
