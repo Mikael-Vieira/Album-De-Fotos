@@ -1,6 +1,29 @@
 @extends('layout.app')
 
 @section('content')
+
+@if (session('sucesso'))
+    <div id="mensagem-sucesso"
+         style="background: #d4edda; color: #155724; padding: 10px; border-radius: 4px; margin-bottom: 20px;">
+        {{ session('sucesso') }}
+    </div>
+
+    <script>
+        setTimeout(() => {
+            const mensagem = document.getElementById('mensagem-sucesso');
+
+            if (mensagem) {
+                mensagem.style.transition = 'opacity 0.5s';
+                mensagem.style.opacity = '0';
+
+                setTimeout(() => {
+                    mensagem.remove();
+                }, 500);
+            }
+        }, 3000); // 3 segundos
+    </script>
+@endif
+
 <div class="home-header">
     <h1>Meus Álbuns</h1>
     <p>Organize suas fotos em coleções personalizadas.</p>
@@ -24,10 +47,18 @@
 
                 <!-- Tenho que adicionar a funcionalidade desse botao -->
                 <div class="album-actions">
-                    <button class="btn-editar-album"> Editar </button>
+                    <a href="{{ route('album.edit', $album->id) }}">
+                        <button class="btn-editar-album"> Editar </button>
+                    </a>
+
+                    <form action="/albums/{{ $album->id }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este álbum?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn-excluir-album">Excluir</button>
+                    </form>
                 </div>
 
-            </div>  
+            </div>
         </div>
     </a>
     @endforeach

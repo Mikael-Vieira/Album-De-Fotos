@@ -50,4 +50,5 @@ class AlbumController extends Controller
 
         return redirect()->back()->with('sucesso', 'Foto removida do álbum com sucesso!');
     }
+
 }

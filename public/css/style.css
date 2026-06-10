@@ -98,7 +98,8 @@ body {
 
 .album-actions {
     display: flex;
-    justify-content: flex-end;
+    gap: 10px;
+    align-items: center;
 }
 
 .btn-editar-album {
@@ -120,5 +121,31 @@ body {
 }
 
 .btn-editar-album:active {
+    transform: translateY(0);
+}
+
+/* Estilo específico do botão Excluir (Vermelho) */
+.btn-excluir-album {
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    background: linear-gradient(135deg, #643837, #d11414);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(13, 110, 253, 0.25);
+}
+
+/* Efeito ao passar o mouse por cima do Excluir */
+.btn-excluir-album:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(106, 114, 126, 0.35);
+    background-color: #bd2130;
+}
+
+/* Efeito ao clicar no Excluir */
+.btn-excluir-album:active {
     transform: translateY(0);
 }
