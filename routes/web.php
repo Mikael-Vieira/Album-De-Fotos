@@ -35,3 +35,6 @@ Route::get('/album/{album}/editar', [editAlbumController::class, 'viewEdit'])->n
 
 //atulizar album com as edições
 Route::put('/album/{album}', [editAlbumController::class, 'update'])->name('album.update');
+
+//deletar album e retirar as fotos dele
+Route::delete('/album/{album}', [editAlbumController::class, 'destroy'])->name('album.destroy');

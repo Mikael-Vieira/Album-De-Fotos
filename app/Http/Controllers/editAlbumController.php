@@ -12,7 +12,7 @@ class editAlbumController extends Controller
         return view('albums.editAlbum', compact('album'));
     }
 
-
+    
     //funcao para excluir o álbum e desvincular as fotos
     public function destroy(Album $album)
     {

@@ -51,7 +51,7 @@
                         <button class="btn-editar-album"> Editar </button>
                     </a>
 
-                    <form action="/albums/{{ $album->id }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este álbum?');">
+                    <form action="{{ route('album.destroy', $album->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este álbum?');">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn-excluir-album">Excluir</button>

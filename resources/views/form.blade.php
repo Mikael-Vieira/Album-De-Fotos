@@ -31,6 +31,7 @@
                     name="description"
                     rows="4"
                     placeholder="Descreva o álbum..."
+                    required
                 ></textarea>
             </div>
 
