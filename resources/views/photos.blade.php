@@ -10,7 +10,7 @@
         <h1>Minhas fotos</h1>
 
         @if(session('sucesso'))
-            <div style="background: #d4edda; color: #155724; padding: 10px; border-radius: 4px; margin-bottom: 15px; width: 100%;">
+            <div class="alert-success">
                 {{ session('sucesso') }}
             </div>
         @endif
@@ -19,7 +19,7 @@
     <div class="photos-grid">
 
         @forelse($photos as $photo)
-            <div class="photo-card" style="border: 1px solid #ddd; padding: 10px; border-radius: 8px; background: #fff; display: flex; flex-direction: column; gap: 10px; position: relative;">
+            <div class="photo-card">
 
                 <form action="{{ route('photos.destroy', $photo->id) }}" method="POST" class="delete-photo-form">
                     @csrf
@@ -29,22 +29,21 @@
                     </button>
                 </form>
                 <a href="{{ asset('storage/' . $photo->image_path) }}" target="_blank" title="Clique para ver a foto">
-                    <img src="{{ asset('storage/' . $photo->image_path) }}" alt="Foto" style="width: 100%; height: 200px; object-fit: cover; border-radius: 4px;">
+                    <img src="{{ asset('storage/' . $photo->image_path) }}" alt="Foto" class="photo-card-img">
                 </a>
 
-
-                <form action="{{ route('photos.link-album') }}" method="POST" style="margin-top: auto;">
+                <form action="{{ route('photos.link-album') }}" method="POST" class="link-album-form">
                     @csrf
                     <input type="hidden" name="photo_id" value="{{ $photo->id }}">
 
-                    <div style="display: flex; gap: 5px;">
-                        <select name="album_id" required style="flex-grow: 1; padding: 5px; font-size: 12px; border-radius: 4px;">
+                    <div class="link-album-row">
+                        <select name="album_id" required class="link-album-select">
                             <option value="">Catalogar em...</option>
                             @foreach($albums as $album)
                                 <option value="{{ $album->id }}">{{ $album->name }}</option>
                             @endforeach
                         </select>
-                        <button type="submit" style="background: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                        <button type="submit" class="btn-link-album">
                             OK
                         </button>
                     </div>
@@ -52,7 +51,7 @@
 
             </div>
         @empty
-            <p style="grid-column: 1 / -1; text-align: center; color: #777;">Nenhuma foto cadastrada ainda.</p>
+            <p class="empty-photos-message">Nenhuma foto cadastrada ainda.</p>
         @endforelse
 
     </div>

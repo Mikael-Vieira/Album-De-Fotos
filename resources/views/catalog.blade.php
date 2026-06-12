@@ -3,14 +3,14 @@
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/styleForm.css') }}">
 
-    <div class="album-container" style="max-width: 600px; margin: 50px auto; padding: 20px;">
+    <div class="album-container">
 
         <div class="album-form-card">
 
             <h1>Adicionar Nova Foto</h1>
 
             @if (session('sucesso'))
-                <div style="background: #d4edda; color: #155724; padding: 10px; border-radius: 4px; margin-bottom: 20px;">
+                <div class="alert-success">
                     {{ session('sucesso') }}
                 </div>
             @endif
@@ -18,12 +18,12 @@
             <form action="{{ route('photos.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
-                <div class="form-group" style="margin-bottom: 20px;">
+                <div class="form-group">
                     <label for="photo">Selecione a Imagem</label>
                     <input type="file" id="photo" name="photos[]" accept="image/*" multiple required>
                 </div>
 
-                <div class="form-group" style="margin-bottom: 20px;">
+                <div class="form-group">
                     <label for="album_id">Escolha o Álbum de Destino</label>
                     <select name="album_id">
                         <option value="">-- Deixar na galeria geral (Sem álbum) --</option>
@@ -33,8 +33,7 @@
                     </select>
                 </div>
 
-                <button type="submit" class="btn-save"
-                    style="width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                <button type="submit" class="btn-save">
                     Adicionar Foto
                 </button>
 

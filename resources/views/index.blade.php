@@ -20,7 +20,7 @@
                     mensagem.remove();
                 }, 500);
             }
-        }, 3000); // 3 segundos
+        }, 3000);
     </script>
 @endif
 
@@ -32,36 +32,57 @@
 <div class="albums-container">
 
     @foreach ($albums as $album)
-    <a href="{{ route('albums.show', $album->id) }}" class="album-card-link" style="text-decoration: none; color: inherit;">
+
         <div class="album-card">
+
             <div class="album-image">
-                @if ($album->cover_photo)
-                <img src="{{ asset('storage/' . $album->cover_photo) }}">
-                @else
-                <img src="https://placehold.co/400x250?text=Sem+Capa">
-                @endif
+                <a href="{{ route('albums.show', $album->id) }}">
+                    @if ($album->cover_photo)
+                        <img src="{{ asset('storage/' . $album->cover_photo) }}" alt="{{ $album->name }}">
+                    @else
+                        <img src="https://placehold.co/400x250?text=Sem+Capa" alt="Sem capa">
+                    @endif
+                </a>
             </div>
+
             <div class="album-info">
-                <h3>{{ $album->name }}</h3>
+
+                <h3>
+                    <a href="{{ route('albums.show', $album->id) }}"
+                       style="text-decoration: none; color: inherit;">
+                        {{ $album->name }}
+                    </a>
+                </h3>
+
                 <p>{{ $album->description }}</p>
 
-                <!-- Tenho que adicionar a funcionalidade desse botao -->
                 <div class="album-actions">
+
                     <a href="{{ route('album.edit', $album->id) }}">
-                        <button class="btn-editar-album"> Editar </button>
+                        <button type="button" class="btn-editar-album">
+                            Editar
+                        </button>
                     </a>
 
-                    <form action="{{ route('album.destroy', $album->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este álbum?');">
+                    <form action="{{ route('album.destroy', $album->id) }}"
+                          method="POST"
+                          onsubmit="return confirm('Tem certeza que deseja excluir este álbum?');">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn-excluir-album">Excluir</button>
+
+                        <button type="submit" class="btn-excluir-album">
+                            Excluir
+                        </button>
                     </form>
+
                 </div>
 
             </div>
+
         </div>
-    </a>
+
     @endforeach
 
 </div>
+
 @endsection

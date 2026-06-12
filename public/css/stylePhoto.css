@@ -20,12 +20,72 @@
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 2px 10px rgba(0,0,0,.08);
+    position: relative;
+    border: 1px solid #e5e5e5;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .photo-card img {
     width: 100%;
     height: 250px;
     object-fit: cover;
+}
+
+.photo-card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.alert-success {
+    background: #e6e6e6;
+    color: #1a1a1a;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.empty-photos-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #888;
+}
+
+.link-album-form {
+    margin-top: auto;
+}
+
+.link-album-row {
+    display: flex;
+    gap: 5px;
+}
+
+.link-album-select {
+    flex-grow: 1;
+    padding: 5px;
+    font-size: 12px;
+    border-radius: 4px;
+    border: 1px solid #dcdcdc;
+}
+
+.btn-link-album {
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.15s;
+}
+
+.btn-link-album:hover {
+    background: #333;
 }
 
 .upload-area {
@@ -66,38 +126,41 @@
     padding: 8px 16px;
     border-radius: 8px;
     border: none;
-    background: #0d6efd;
+    background: #1a1a1a;
     color: #fff;
     font-size: 14px;
     cursor: pointer;
-    transition: opacity 0.15s;
+    transition: opacity 0.15s, background 0.15s;
 }
 
-.btn-upload:hover { opacity: 0.88; }
+.btn-upload:hover {
+    background: #333;
+    opacity: 0.88;
+}
 
 
 /*------------------------------------------*/
 /* Botão de Exclusão Permanente dentro do card */
 .photo-card .delete-photo-btn {
     position: absolute;
-    top: 18px; /* Afasta o botão do topo do card */
-    right: 18px; /* Afasta o botão da lateral direita do card */
-    background: rgba(255, 255, 255, 0.9); /* Fundo branco levemente transparente */
-    color: #333; /* Cor do X */
+    top: 18px;
+    right: 18px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
     border: none;
     width: 26px;
     height: 26px;
-    border-radius: 50%; /* Deixa o botão redondo */
+    border-radius: 50%;
     font-size: 11px;
     font-weight: bold;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.15); /* Sombra sutil */
-    opacity: 0; /* Deixa invisível por padrão */
-    transition: opacity 0.2s ease, background 0.2s ease, color 0.2s ease; /* Transição suave */
-    z-index: 5; /* Garante que ele fique acima da imagem */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    opacity: 0;
+    transition: opacity 0.2s ease, background 0.2s ease, color 0.2s ease;
+    z-index: 5;
 }
 
 /* Faz o "✕" surgir suavemente ao passar o mouse sobre o photo-card */
@@ -107,6 +170,6 @@
 
 /* Efeito vermelho ao passar o mouse em cima do "✕" */
 .photo-card .delete-photo-btn:hover {
-    background: #dc3545;
+    background: #dd3333;
     color: #fff;
 }

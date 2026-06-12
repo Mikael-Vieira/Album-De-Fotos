@@ -108,8 +108,8 @@
   display: inline-block;
   padding: 11px 32px;
   background: transparent;
-  border: 1px solid #333;
-  color: #333;
+  border: 1px solid #1a1a1a;
+  color: #1a1a1a;
   font-family: 'DM Sans', sans-serif;
   font-size: 12px;
   font-weight: 500;
@@ -121,7 +121,7 @@
 }
 
 .catalog-btn:hover {
-  background: #333;
+  background: #1a1a1a;
   color: #fff;
 }
 
@@ -160,7 +160,7 @@
     align-items: center;
     justify-content: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    opacity: 0; /* Invisível inicialmente */
+    opacity: 0;
     transition: opacity 0.2s ease, background 0.2s ease;
 }
 
