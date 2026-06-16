@@ -81,7 +81,6 @@ body {
 
 .album-card {
     background: #fff;
-    border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
     transition: 0.3s ease;
@@ -148,7 +147,6 @@ body {
     width: 100%;
     border: none;
     padding: 12px;
-    border-radius: 8px;
     cursor: pointer;
     color: white;
     font-size: 14px;

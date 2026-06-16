@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
+class LoginController extends Controller
+{
+    public function uploadPage()
+    {
+        return view('login.telaLogin');
+    }
+
+    public function authenticate(Request $request){
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        $remember = $request->boolean('remember');
+
+        if (Auth::attempt($credentials, $remember)) {
+
+            $request->session()->regenerate();
+
+            return redirect()->intended('/albums');
+        }
+
+        return back()->withErrors([
+            'email' => 'As credenciais fornecidas não foram encontradas no nosso sistema.',
+        ])->onlyInput('email');
+    }
+
+}

@@ -4,37 +4,47 @@ use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\CardsController;
 use App\Http\Controllers\editAlbumController;
 use App\Http\Controllers\FormController;
-use App\Http\Controllers\PhotoController; // Adicionamos a importação do novo controller aqui
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PhotoController;
 use Illuminate\Support\Facades\Route;
 
-// Rotas dos Álbuns
-Route::get('/form', [FormController::class, 'index'])->name('formulario');
-Route::get('/', [CardsController::class, 'select'])->name('card.index');
-Route::post('/albums', [FormController::class, 'store']);
-Route::get('/albums', [CardsController::class, 'select']);
-Route::get('/albums/{id}', [AlbumController::class, 'show'])->name('albums.show');
 
-// Rotas das Fotos
-Route::get('/photos', [PhotoController::class, 'index'])->name('photos.index');
-Route::get('/catalogar', [PhotoController::class, 'uploadPage'])->name('photos.catalogar');
-Route::post('/catalogar/salvar', [PhotoController::class, 'storePhoto'])->name('photos.store');
-Route::post('/fotos/vincular', [PhotoController::class, 'linkAlbum'])->name('photos.link-album');
+// Rota tela de login
+Route::get('/', [LoginController::class, 'uploadPage'])->name('login');
+
+// Autenticação
+Route::post('authenticate/login', [LoginController::class, 'authenticate'])->name('authenticate');
 
 
-//deletar foto do álbum
-Route::delete('/albums/{album}/photos/{photo}', [AlbumController::class, 'detachPhoto'])->name('albums.photos.detach');
+// ROTAS PRIVADAS (Só entra com login e senha)
+Route::middleware('auth')->group(function () {
 
-//deletar foto do sistema
-Route::delete('/photos/{photo}', [PhotoController::class, 'destroy'])->name('photos.destroy');
+    // Tela principal pós-login
+    Route::get('/index', [CardsController::class, 'select'])->name('card.index');
 
-//mostrar foto em tamanho real
-Route::get('/photos/{photo}', [PhotoController::class, 'show'])->name('photos.show');
+    // Rotas dos Álbuns
+    Route::get('/form', [FormController::class, 'index'])->name('formulario');
+    Route::post('/albums', [FormController::class, 'store']);
+    Route::get('/albums', [CardsController::class, 'select']);
+    Route::get('/albums/{id}', [AlbumController::class, 'show'])->name('albums.show');
 
-//editar álbum
-Route::get('/album/{album}/editar', [editAlbumController::class, 'viewEdit'])->name('album.edit');
+    // Editar, atualizar e deletar álbum
+    Route::get('/album/{album}/editar', [editAlbumController::class, 'viewEdit'])->name('album.edit');
+    Route::put('/album/{album}', [editAlbumController::class, 'update'])->name('album.update');
+    Route::delete('/album/{album}', [editAlbumController::class, 'destroy'])->name('album.destroy');
 
-//atulizar album com as edições
-Route::put('/album/{album}', [editAlbumController::class, 'update'])->name('album.update');
+    // Rotas das Fotos
+    Route::get('/photos', [PhotoController::class, 'index'])->name('photos.index');
+    Route::get('/catalogar', [PhotoController::class, 'uploadPage'])->name('photos.catalogar');
+    Route::post('/catalogar/salvar', [PhotoController::class, 'storePhoto'])->name('photos.store');
+    Route::post('/fotos/vincular', [PhotoController::class, 'linkAlbum'])->name('photos.link-album');
 
-//deletar album e retirar as fotos dele
-Route::delete('/album/{album}', [editAlbumController::class, 'destroy'])->name('album.destroy');
+    // Deletar e visualizar fotos
+    Route::delete('/albums/{album}/photos/{photo}', [AlbumController::class, 'detachPhoto'])->name('albums.photos.detach');
+    Route::delete('/photos/{photo}', [PhotoController::class, 'destroy'])->name('photos.destroy');
+    Route::get('/photos/{photo}', [PhotoController::class, 'show'])->name('photos.show');
+
+    // Rota de logout (Se você não tiver, adicione no Controller depois)
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+});
