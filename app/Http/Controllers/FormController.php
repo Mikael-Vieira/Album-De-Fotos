@@ -24,6 +24,6 @@ class FormController extends Controller
             'cover_photo' => $request->file('cover_photo') ? $request->file('cover_photo')->store('albums', 'public') : null,
         ]);
 
-        return redirect('/')->with('sucesso', 'Álbum cadastrado com sucesso!');
+        return redirect('index')->with('sucesso', 'Álbum cadastrado com sucesso!');
     }
 }
